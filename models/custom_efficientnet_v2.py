@@ -32,7 +32,7 @@ def custom_efficientnet_v2(pretrained: bool = False, progress: bool = True, **kw
     model = CustomEfficientNet_V2(**kwargs)
     
     if pretrained:
-        state_dict = load_state_dict_from_url(url='https://github.com/ES-24-ROB6-662/SeasonyCNN/raw/Dataset-loading/models_weights/efficientnetv2_loss0.000124.pth', progress=progress)
+        state_dict = load_state_dict_from_url(url='https://github.com/andreasHovaldt/custom-pytorch-models/raw/main/models_weights/efficientnetv2_loss0.000124.pth', progress=progress)
         model.load_state_dict(state_dict)
     
     return model
