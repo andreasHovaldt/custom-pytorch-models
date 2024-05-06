@@ -4,6 +4,9 @@ import torchvision.models as models
 from torch.hub import load_state_dict_from_url
 from typing import Any
 
+weight_urls = ['https://github.com/andreasHovaldt/custom-pytorch-models/raw/main/models_weights/efficientnetv2_loss0.000124.pth',  # Trained on old environment
+               'https://github.com/andreasHovaldt/custom-pytorch-models/raw/main/models_weights/efficientnetv2_loss0.000321.pth',] # Trained on new environment
+
 class CustomEfficientNet_V2(nn.Module):
     def __init__(self):
         super().__init__()
@@ -32,7 +35,7 @@ def custom_efficientnet_v2(pretrained: bool = False, progress: bool = True, **kw
     model = CustomEfficientNet_V2(**kwargs)
     
     if pretrained:
-        state_dict = load_state_dict_from_url(url='https://github.com/andreasHovaldt/custom-pytorch-models/raw/main/models_weights/efficientnetv2_loss0.000124.pth', progress=progress)
+        state_dict = load_state_dict_from_url(url=weight_urls[1], progress=progress)
         model.load_state_dict(state_dict)
     
     return model
