@@ -9,7 +9,7 @@ from typing import Any
 urls = [
     'https://github.com/andreasHovaldt/custom-pytorch-models/raw/rizznet50/models_weights/dual_resnet50pose_0.000313_rgb.pth',
     'https://github.com/andreasHovaldt/custom-pytorch-models/raw/rizznet50/models_weights/dual_resnet50pose_0.000313_depth.pth',
-    'https://github.com/andreasHovaldt/custom-pytorch-models/raw/rizznet50/models_weights/dual_resnet50pose_0.000313_final.pth.pth',
+    'https://github.com/andreasHovaldt/custom-pytorch-models/raw/rizznet50/models_weights/dual_resnet50pose_0.000313_final.pth',
 ]
 
 # Custom transform to threshold the depth image
