@@ -70,7 +70,7 @@ def create_np_voxel_from_depth_image(depth_image, voxel_size = 0.01):
 
 
 if __name__ == "__main__":    
-    depth_image = np.load("/home/a/seasony/dataset_rotations/dataset/depth/depth_image_4.npy")
+    depth_image = np.load("/home/a/seasony/testing-dataset-rots/depth/depth_image_1.npy")
     rgb_image = cv2.imread("/home/a/seasony/testing-datasetWithProcessedDepth/rgb/rgb_image_0.png")
     # print(rgb_image.shape)
     #

@@ -19,16 +19,17 @@ voxel_dir = "/home/omniverse-11/Desktop/Datasets/voxel_dataset/voxel/"
 
 dataset = VoxelDataset(label_path, voxel_dir)
 
-voxel_dataloader = DataLoader(dataset, batch_size=20)
+voxel_dataloader = DataLoader(dataset, batch_size=25, num_workers = 8, prefetch_factor = 400)
 
 voxelnet = VoxelNet()
 voxelnet.to('cuda')
+voxelnet.load_state_dict(torch.load("voxelnet_rot_l_0.015363795682787895_ep_99.pth"))
 
-loss_function = PoseLoss( torch.tensor([1,1,2,0.05,0.05,0.05]).cuda() )
+loss_function = PoseLoss( torch.tensor([0,0,0,1,1,1]).cuda() )
 
-optimizer = torch.optim.Adam(voxelnet.parameters(), lr = 0.000001)
-
-for ep in range(100):
+optimizer = torch.optim.Adam(voxelnet.parameters(), lr = 0.000001, weight_decay= 0.00001)
+losses = []
+for ep in range(50):
     #freeze a random layer hehe 
     layer_to_freeze = np.random.random_integers(0,5)
     print(f"freezing layer {layer_to_freeze}")
@@ -45,7 +46,9 @@ for ep in range(100):
         loss.backward()
         optimizer.step()
         optimizer.zero_grad()
+        losses.append(loss.item())
     os.system('cls||clear')
     print(f"loss {loss.item()}, ep {ep}")
 
-torch.save(voxelnet.state_dict(), f"voxelnet_l_{loss.item()}_ep_{ep}.pth")
+torch.save(voxelnet.state_dict(), f"voxelnet_rot_l_{loss.item()}_ep_{ep}.pth")
+np.savetxt("losses.txt",np.array(losses))

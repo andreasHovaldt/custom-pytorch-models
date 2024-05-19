@@ -30,7 +30,7 @@ voxel_dataloader = DataLoader(voxel_dataset)
 
 voxelnet = VoxelNet()
 
-voxelnet.load_state_dict(torch.load("/home/a/seasony/custom-pytorch-models/voxelnet/voxelnet_l_0.00019675052317325026_ep_99.pth", map_location=torch.device('cpu')))
+voxelnet.load_state_dict(torch.load("/home/a/seasony/custom-pytorch-models/voxelnet/voxelnet_rot_l_0.009557981975376606_ep_49.pth", map_location=torch.device('cpu')))
 
 results = []
 for voxel, label in tqdm(voxel_dataloader):
@@ -39,6 +39,7 @@ for voxel, label in tqdm(voxel_dataloader):
         buffer = np.zeros(12)
         buffer[0:6] = np.array(label)
         buffer[6:12] = np.array(out)
+        # print(f"l {buffer[0:3]}, \no {buffer[6:9]} \n\n")
         results.append(buffer)
 
 results = np.array(results)
@@ -48,5 +49,5 @@ colors = ["red", "green", "blue"]
 
 fig, axs = plt.subplots(1,3)
 for n in range(3):
-    axs[n].scatter(results[:,n+3], results[:,n+6+3], c = colors[n])
+    axs[n].scatter(results[:,n], results[:,n+6], c = colors[n], s = 0.5)
 plt.show()

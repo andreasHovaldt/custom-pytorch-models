@@ -3,10 +3,9 @@ import os
 import numpy as np 
 from tqdm import tqdm
 
-input_dir = "/home/a/seasony/testing-dataset-rots/depth/"
-destination_dir = "/home/a/seasony/testing-dataset-rots/voxel/"
-
-os.makedirs(destination_dir)
+input_dir = "/home/omniverse-11/Desktop/Datasets/voxel_dataset/depth/"
+destination_dir = "/home/omniverse-11/Desktop/Datasets/voxel_dataset/voxel/"
+# os.makedirs(destination_dir)
 
 for depth_img in tqdm(os.listdir(input_dir)):
     img = np.load(os.path.join(input_dir, depth_img))
