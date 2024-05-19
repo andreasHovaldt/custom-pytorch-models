@@ -30,7 +30,7 @@ voxel_dataloader = DataLoader(voxel_dataset)
 
 voxelnet = VoxelNet()
 
-voxelnet.load_state_dict(torch.load("/home/a/seasony/custom-pytorch-models/voxelnet/voxelnet_rot_l_0.009557981975376606_ep_49.pth", map_location=torch.device('cpu')))
+voxelnet.load_state_dict(torch.load("/home/a/seasony/custom-pytorch-models/voxelnet/voxelnet_best_weights_150_ep.pth", map_location=torch.device('cpu')))
 
 results = []
 for voxel, label in tqdm(voxel_dataloader):
@@ -44,6 +44,7 @@ for voxel, label in tqdm(voxel_dataloader):
 
 results = np.array(results)
 
+np.savetxt(f"voxelnet_results_{(labels_path.split('/')[-2])}.txt",results)
 
 colors = ["red", "green", "blue"]
 

@@ -23,21 +23,21 @@ voxel_dataloader = DataLoader(dataset, batch_size=25, num_workers = 8, prefetch_
 
 voxelnet = VoxelNet()
 voxelnet.to('cuda')
-voxelnet.load_state_dict(torch.load("voxelnet_rot_l_0.015363795682787895_ep_99.pth"))
+# voxelnet.load_state_dict(torch.load("voxelnet_rot_l_0.015363795682787895_ep_99.pth"))
 
-loss_function = PoseLoss( torch.tensor([0,0,0,1,1,1]).cuda() )
+loss_function = PoseLoss( torch.tensor([1,1,2,0.02,0.02,0.02]).cuda() )
 
-optimizer = torch.optim.Adam(voxelnet.parameters(), lr = 0.000001, weight_decay= 0.00001)
+optimizer = torch.optim.Adam(voxelnet.parameters(), lr = 0.00001, weight_decay= 0.0001)
 losses = []
 for ep in range(50):
     #freeze a random layer hehe 
-    layer_to_freeze = np.random.random_integers(0,5)
-    print(f"freezing layer {layer_to_freeze}")
-    for layer, param in enumerate(voxelnet.parameters()):
-        if layer == layer_to_freeze:
-            param.requires_grad = False 
-        else:
-            param.requires_grad = True
+    # layer_to_freeze = np.random.random_integers(0,5)
+    # print(f"freezing layer {layer_to_freeze}")
+    # for layer, param in enumerate(voxelnet.parameters()):
+    #     if layer == layer_to_freeze:
+    #         param.requires_grad = False 
+    #     else:
+    #         param.requires_grad = True
 
     for voxel, label in tqdm(voxel_dataloader):
         pred = voxelnet(voxel.cuda())
