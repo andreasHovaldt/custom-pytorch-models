@@ -15,17 +15,17 @@ class VoxelNet(nn.Module):
     def __init__(self):
         super(VoxelNet, self).__init__()
         self.conv_layer1 = nn.Sequential(
-            nn.Conv3d(1, 512, kernel_size=21, bias=False,stride=7),
+            nn.Conv3d(1, 256, kernel_size=21, bias=False,stride=7),
             #nn.BatchNorm3d(256),
             nn.LeakyReLU(),
         )
         self.conv_layer2 = nn.Sequential(
-            nn.Conv3d(512, 512, kernel_size=3, bias=False),
+            nn.Conv3d(256, 256, kernel_size=3, bias=False),
             #nn.BatchNorm3d(512),
             nn.LeakyReLU(),
         )
         self.conv_layer3 = nn.Sequential(
-            nn.Conv3d(512, 512, kernel_size=1, bias=True),
+            nn.Conv3d(256, 512, kernel_size=1, bias=True),
             nn.LeakyReLU(),
             nn.Conv3d(512, 512, kernel_size=1, bias=True),
             nn.LeakyReLU(),

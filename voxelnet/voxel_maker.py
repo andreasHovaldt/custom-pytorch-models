@@ -10,7 +10,7 @@ MIN_BOUNDS = np.array([0,0,0])
 MAX_BOUNDS = np.array([195,104,55])
 
 
-def make_PCD(depth_image, threshold=0.25, intrinsics=[1280, 800, 800.69, 800.69,651.99,412.456421]):
+def make_PCD(depth_image, threshold=0.7, intrinsics=[1280, 800, 241.69, 241.69,651.99,412.456421]):
     '''
     A function that converts an RGB_image + depth image to a pointcloud.
 
@@ -47,9 +47,9 @@ def make_PCD(depth_image, threshold=0.25, intrinsics=[1280, 800, 800.69, 800.69,
 
 def voxel_from_image(depth_image, voxel_size):
     pc = make_PCD(depth_image = depth_image)
-    cl, ind = pc.remove_statistical_outlier(nb_neighbors=20,
-                                  std_ratio=3.0)
-    voxel = o3d.geometry.VoxelGrid.create_from_point_cloud(cl, voxel_size)
+    # pc, ind = pc.remove_statistical_outlier(nb_neighbors=20,
+    #                               std_ratio=3.0)
+    voxel = o3d.geometry.VoxelGrid.create_from_point_cloud(pc, voxel_size)
     return voxel
 
 
@@ -72,29 +72,25 @@ def create_np_voxel_from_depth_image(depth_image, voxel_size = 0.01):
 
 
 if __name__ == "__main__":    
-    depth_image = np.load("/home/a/seasony/testing-dataset-rots/depth/depth_image_23.npy")
-    # plt.imshow(depth_image)
-    # plt.show()
+    depth_image = np.load("/home/a/seasony/testing-dataset-rots/depth/depth_image_1.npy")
     rgb_image = cv2.imread("/home/a/seasony/testing-datasetWithProcessedDepth/rgb/rgb_image_0.png")
     # print(rgb_image.shape)
     #
-    voxel = voxel_from_image(depth_image, 0.002)
-    o3d.visualization.draw_geometries([voxel])
-    voxel_list = []
-    for vox in voxel.get_voxels():
-        # print(vox.grid_index)
-        voxel_list.append(vox.grid_index)
+    # voxel = voxel_from_image(depth_image, 0.01)
+    # voxel_list = []
+    # for vox in voxel.get_voxels():
+    #     # print(vox.grid_index)
+    #     voxel_list.append(vox.grid_index)
     #
-    voxel_array = np.array(voxel_list)
+    # voxel_array = np.array(voxel_list)
     #
-    # fig = plt.figure()
-    # ax = fig.add_subplot(111, projection='3d')
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
     #
     # # Scatter plot of voxel coordinates
     # ax.scatter(voxel_array[:, 0], voxel_array[:, 1], voxel_array[:, 2])
-    # plt.show()
     # 
-    print(f"i0 max {np.max(voxel_array[:,0])} min {np.min(voxel_array[:,0])} \ni1 max {np.max(voxel_array[:,1])} min {np.min(voxel_array[:,1])} \ni1 max {np.max(voxel_array[:,2])} min {np.min(voxel_array[:,2])}")
+    # print(f"i0 max {np.max(voxel_array[:,0])} min {np.min(voxel_array[:,0])} \ni1 max {np.max(voxel_array[:,1])} min {np.min(voxel_array[:,1])} \ni1 max {np.max(voxel_array[:,2])} min {np.min(voxel_array[:,2])}")
     #
     # voxel_matrix = np.zeros(tuple(MAX_BOUNDS))
     #
@@ -116,8 +112,8 @@ if __name__ == "__main__":
                 if voxel_matrix[m,n,k] == 1: 
                     test_voxel_array.append(np.array([m, n, k]))
     test_voxel_array = np.array(test_voxel_array)   
-    # ax.scatter(test_voxel_array[:, 0], test_voxel_array[:, 1], test_voxel_array[:, 2])
-    # # ax.voxels(voxel_matrix, edgecolor='k') 
-    #
-    #
-    # plt.show()
+    ax.scatter(test_voxel_array[:, 0], test_voxel_array[:, 1], test_voxel_array[:, 2])
+    # ax.voxels(voxel_matrix, edgecolor='k') 
+
+
+    plt.show()
